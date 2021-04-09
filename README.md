@@ -1,6 +1,13 @@
 # Crapsgame
 
+Simple game project for learning Angular. Part of a programming course.
+In the game the player throws dies and collects points.
+Read more about the rules and setup from the file "craps_with_angular.txt"
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.7.
+
+# How to run, build and test
 
 ## Development server
 
