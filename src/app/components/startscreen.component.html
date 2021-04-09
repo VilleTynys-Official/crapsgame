@@ -1,4 +1,19 @@
 <div style="text-align:center">
 	<h2>Craps game</h2>
-	<button (click)="startGame()">Start game</button>
+	<form (ngSubmit)="startGame()" #startForm="ngForm">
+		<label for="userName">What's your name</label>
+		<input type="text"
+				id="userName"
+				name="userName"
+				[(ngModel)]= "userName">
+		<input/>
+		<br>
+		<label for="bet">Choose bet mode</label>
+		<select class="custom-select" (change)="changeBet($event)">
+			<option value="" disabled>Choose your bet</option>
+			<option *ngFor="let bet of bets" [ngValue]="bet">{{bet}}</option>
+		 </select>
+		<br>
+		<input type="submit" value="Start"/>
+	</form>
 </div>
