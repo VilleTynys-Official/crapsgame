@@ -1,5 +1,11 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {Injectable} from '@angular/core';
+
+
+interface IGameResults {
+	message: string;
+	type:string;
+}
+
 @Injectable()
 export class GameMechanics {
 	
@@ -9,8 +15,11 @@ export class GameMechanics {
 	private bet:string;
 	private sum:number;
 	private point:number | null = null;
+	private gameResults:IGameResults = {
+		message:"Click roll to play",
+		type:"default"
+	}
 
-	
 	startGame(playerName:string, bet:string) {
 		this.playerName = playerName;
 		this.bet = bet;
@@ -19,29 +28,45 @@ export class GameMechanics {
 
 	/**
 	 * @returns the game results in the following object:
-	 * 
 	 * {
 	 * message: string,
-	 * status:"win" || "lose" || "moneyback" || "game_continues" 
+	 * type: string ("win" || "lose" || "moneyback" || "game_continues" || "default")
 	 * }
-	 * 
 	 */
-	
+
 	 roll() {
 		this.numberOfRolls++;
 		this.die[0] = Math.floor(Math.random()*6)+1;
 		this.die[1] = Math.floor(Math.random()*6)+1;
 		this.setSum();
 
-		let gameResults;
+
+
 		if(this.bet == "PASS"){
-			gameResults= this.playPass()
+			this.gameResults.type= this.playPass().type
 		}else{
-			gameResults = this.playDontPass();
+			this.gameResults.type = this.playDontPass().type
 		}
 		
 		// CREATE SWITCH FOR ANSWER MESSAGES
-		return gameResults
+
+		switch(this.gameResults.type){
+			case "win":
+				this.gameResults.message = "Congrats you have won!"
+				break;
+			case "lose":
+				this.gameResults.message = "Oh no you just lost"
+				break;
+			case "game_continues":
+				this.gameResults.message = "Game continues.."
+				break;
+			case "money_back":
+				this.gameResults.message = `You got your money back because sum was 12 and you had bet "don't pass" `
+				break;
+			default:
+				this.gameResults.message = "Something went wrong"
+		}
+		return this.gameResults
 
 	}
 
