@@ -1,16 +1,15 @@
 # Crapsgame
 
-Simple game project for learning Angular. Part of a programming course.
-In the game the player throws dies and collects points.
+This is a simple game project to learn a bit how Angular works.
+In the game Craps people throw two dice and in this simple version player can make to different bets: Pass or Don't Pass.
 Read more about the rules and setup from the file "craps_with_angular.txt"
-
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.7.
 
 # How to run, build and test
-
 ## Development server
 
+Do `npm install` in the root folder.
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding

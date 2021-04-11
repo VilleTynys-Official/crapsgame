@@ -11,13 +11,13 @@ import {GameMechanics} from './services/gamemechanics.service';
 @NgModule({
   declarations: [
     AppComponent,
-	StartScreen,
-	GameScreen
+	  StartScreen,
+	  GameScreen
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-	FormsModule
+	  FormsModule
   ],
   providers: [GameMechanics],
   bootstrap: [AppComponent]
