@@ -11,19 +11,23 @@ export class GameMechanics {
 	
 	private die:Array<number> = [0,0]
 	private numberOfRolls:number;
-	private playerName:string;
+	private userName:string = ""
 	private bet:string;
 	private sum:number;
 	private point:number | null = null;
 	private gameResults:IGameResults = {
-		message:"Click roll to play",
+		message:".....",
 		type:"default"
-	}
+	};
 
-	startGame(playerName:string, bet:string) {
-		this.playerName = playerName;
+	startGame(userName:string, bet:string) {
+		this.userName = userName;
 		this.bet = bet;
 		this.numberOfRolls = 0;
+		this.gameResults = {
+			message:`Hi ${this.userName}. Click play to roll the dice`,
+			type:"default"
+		}
 	}
 
 	/**
@@ -40,34 +44,36 @@ export class GameMechanics {
 		this.die[1] = Math.floor(Math.random()*6)+1;
 		this.setSum();
 
-
-
 		if(this.bet == "PASS"){
-			this.gameResults.type= this.playPass().type
+			this.playPass()
 		}else{
-			this.gameResults.type = this.playDontPass().type
+			this.playDontPass()
 		}
 		
-		// CREATE SWITCH FOR ANSWER MESSAGES
+		//  Update message
 
 		switch(this.gameResults.type){
 			case "win":
-				this.gameResults.message = "Congrats you have won!"
+				this.gameResults.message = `You rolled ${this.sum}. You won!` 
 				break;
 			case "lose":
-				this.gameResults.message = "Oh no you just lost"
+				this.gameResults.message = `You rolled ${this.sum}. So you just lost.`
 				break;
 			case "game_continues":
-				this.gameResults.message = "Game continues.."
+				this.gameResults.message = `You rolled ${this.sum}. The game continues`
 				break;
 			case "money_back":
-				this.gameResults.message = `You got your money back because sum was 12 and you had bet "don't pass" `
+				this.gameResults.message = `You got your money back because you rolled 12 and you had bet "don't pass" `
 				break;
 			default:
 				this.gameResults.message = "Something went wrong"
 		}
-		return this.gameResults
+		return this.gameResults 
 
+	}
+
+	getUserName(){
+		return this.userName;
 	}
 
 	setSum(){
@@ -79,6 +85,9 @@ export class GameMechanics {
 	}
 	getDie(){
 		return this.die;
+
+	getMessage(){
+		return this.gameResults.message;
 	}
 
 	getNumberOfRolls(){
@@ -89,44 +98,37 @@ export class GameMechanics {
 	playPass(){
 		// First round (we know there is no point in the first round so it is used for control logic)
 		console.log('Playing "playPass" with a sum of: ', this.sum);
-		
 		if(this.point == null){
-
+			
 			if(this.sum ===7 || this.sum === 11){
 				console.log('win');
-				return {
-					type:"win",
-				}
+				this.gameResults.type = "win"
+				return
 			}
 			if(this.sum === 2 || this.sum === 3 || this.sum === 12){
 				console.log('lose');
-				return {
-					type:"lose",
-				}
+				this.gameResults.type = "lose"
+				return
 			}
 
 			this.point = this.sum;
-			return {
-				type: "game_continues"
-			}
+			this.gameResults.type = "game_continues"
+			return
 		}
 	
 		//  Other rounds. This runs always after first round.
 		
 		if(this.sum === 7){
-			return{
-				type:"lose"
-			}
+			this.gameResults.type = "lose"
+			return
 		}
 		
 		if(this.point == this.sum){
-			return{
-				type:"win"
-			}
+			this.gameResults.type = "win"
+			return
 		}
-		return {
-			type:"game_continues"
-		}
+		this.gameResults.type = "game_continues"
+		return
 	}
 
 	// LOGIC FOR DON'T PASS BET
