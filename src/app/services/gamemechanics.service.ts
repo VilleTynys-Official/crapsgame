@@ -9,7 +9,7 @@ interface IGameResults {
 @Injectable()
 export class GameMechanics {
 	
-	private die:Array<number> = [0,0]
+	private dice:Array<number> = [0,0]
 	private numberOfRolls:number;
 	private userName:string = ""
 	private bet:string;
@@ -40,8 +40,8 @@ export class GameMechanics {
 
 	 roll() {
 		this.numberOfRolls++;
-		this.die[0] = Math.floor(Math.random()*6)+1;
-		this.die[1] = Math.floor(Math.random()*6)+1;
+		this.dice[0] = Math.floor(Math.random()*6)+1;
+		this.dice[1] = Math.floor(Math.random()*6)+1;
 		this.setSum();
 
 		if(this.bet == "PASS"){
@@ -77,14 +77,15 @@ export class GameMechanics {
 	}
 
 	setSum(){
-		this.sum= this.die[0] + this.die[1]
+		this.sum= this.dice[0] + this.dice[1];
 	}
 
 	getSum(){
 		return this.sum;
 	}
-	getDie(){
-		return this.die;
+	getdice(){
+		return this.dice;
+	}
 
 	getMessage(){
 		return this.gameResults.message;
