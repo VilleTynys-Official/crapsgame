@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {GameMechanics} from '../services/gamemechanics.service';
 import {Router} from '@angular/router';
-import { stringify } from '@angular/compiler/src/util';
 
 @Component({
 	selector:"startscreen",
@@ -9,11 +8,15 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class StartScreen {
 
-    userName:string = "";
-	bets: Array<string>= ["PASS", "DONT_PASS"]
-	bet:string = "PASS"
+    userName:string;
+	bets: Array<string> = ["PASS", "DONT_PASS"];
+	bet: string = "PASS";
+	message: string;
 
-	constructor(private _game:GameMechanics,private _router:Router) {}
+	constructor(private _game:GameMechanics , private _router:Router) {
+		this.userName = this._game.getUserName();
+		this.message = this._game.getMessage();
+	}
 
 	// FOR THE SELECTION
 	changeBet(e) {
@@ -23,7 +26,7 @@ export class StartScreen {
 	}
 
 	startGame() {
-		this._game.startGame(this.userName, this.bet);
+		this._game.startGame(this.userName, this.bet);		
 		this._router.navigate(['/game']);
 	}
 }

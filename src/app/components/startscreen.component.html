@@ -1,12 +1,12 @@
 <div style="text-align:center">
 	<h2>Craps game</h2>
+	<h4>{{message}}</h4>
 	<form (ngSubmit)="startGame()" #startForm="ngForm">
 		<label for="userName">What's your name</label>
 		<input type="text"
 				id="userName"
 				name="userName"
-				[(ngModel)]= "userName">
-		<input/>
+				[(ngModel)]= "userName"/>
 		<br>
 		<label for="bet">Choose bet mode</label>
 		<select class="custom-select" (change)="changeBet($event)">
